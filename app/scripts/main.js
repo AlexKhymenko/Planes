@@ -4,10 +4,10 @@ console.log('\'Allo \'Allo!');
 console.log('hi');
 class Dot {
   constructor(top, left) {
-    this.style.height = '20px';
-    this.style.width = '20px';
-    this.style.top = top;
-    this.style.left = left;
+    this.height = '20px';
+    this.width = '20px';
+    this.top = top;
+    this.left = left;
   }
 }
 class Plane {
@@ -83,11 +83,18 @@ function changePosition(setOfkeys) {
   console.log(moveAirplane);
   return moveAirplane;
 }
-
+var counter = 0;
 function movePlane(ele) {
-  if(event.keyCode === 32) {
-    $("#body").append("<div>hello world</div>")
 
+  if(event.keyCode === 32) {
+      counter += 1;
+    console.log(counter);
+    let dot = new Dot(ele.style.top, ele.style.left);
+    console.log(dot);
+    $("#body").append("<div id=\"dot"+ counter + "\"" + "style=\"top: "+ ele.style.top + "; left:" +  ele.style.left + ";width: 20px; height: 20px; position:absolute; background-color: green\"></div>")
+    $("#dot" + counter).velocity({
+      top: '-=1000px'
+    }, {dispay: 'none'});
     console.log('this is position of element', ele);
     return console.log('im firing');
   }
