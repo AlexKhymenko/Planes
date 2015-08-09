@@ -22,7 +22,7 @@
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
   </head>
-  <body>
+  <body id="body">
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -64,7 +64,7 @@
       <!--</div>-->
     <!--</div>-->
 
-    <div id="plane" style="display: block; width: 20px; height: 10px; background-color: green; position: absolute" tabindex="0" onkeydown="movePlane(this)" onkeypress="movePlane(this)"></div>
+    <canvas id="plane" style="display: block; width: 20px; height: 10px; background-color: green; position: absolute; left: 100px; top: 100px"  tabindex="0"  onkeydown="movePlane(this)" onkeydown="test()"  onkeyup="stopPlane()"></canvas>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>

@@ -2,7 +2,14 @@
 
 console.log('\'Allo \'Allo!');
 console.log('hi');
-
+class Dot {
+  constructor(top, left) {
+    this.style.height = '20px';
+    this.style.width = '20px';
+    this.style.top = top;
+    this.style.left = left;
+  }
+}
 class Plane {
   constructor(width, height) {
     this.width = width;
@@ -16,28 +23,87 @@ class Plane {
 
 var x = new Plane(400, 500);
 
+var keyLeftPressed = false;
+var keyRightPressed = false;
+var keyTopPressed = false;
+var keyDownPressed = false;
+
+var pressedKeys = new Set();
+
+
+
+
+function stopPlane() {
+  var plane = $('#plane');
+  if(event.keyCode === 32) {
+    return;
+  }
+
+  console.log('stop event', event.keyCode);
+  pressedKeys.delete(event.keyCode);
+  plane.velocity("stop");
+
+  var moveAirplane = changePosition(pressedKeys);
+  plane.velocity(
+    moveAirplane
+    , { duration: 4000 });
+
+}
+
+
+let moveLeft = false;
+let moveRight = false;
+let moveUp = false;
+let moveDown = false;
+function changePosition(setOfkeys) {
+  let moveAirplane = {};
+
+  for(let item of setOfkeys) {
+    if(item === 37) {
+      moveAirplane.left = '-=1000px';
+    }
+
+    if(item === 38) {
+      moveAirplane.top = "-=1000px"
+
+
+    }
+
+    if(item === 39) {
+      moveAirplane.left = '+=1000px';
+
+    }
+
+    if(item === 40) {
+      moveAirplane.top = "+=1000px"
+
+    }
+  }
+
+  console.log(moveAirplane);
+  return moveAirplane;
+}
 
 function movePlane(ele) {
-  var position = Number(ele.style.left.match(/\d+/));
+  if(event.keyCode === 32) {
+    $("#body").append("<div>hello world</div>")
 
-  if(event.keyCode === 37) {
-    console.log(ele.style.left = position - 50 +'px');
-    return console.log('i should go left');
+    console.log('this is position of element', ele);
+    return console.log('im firing');
   }
+  if(pressedKeys.has(event.keyCode)) {
+    return;
+  }
+  pressedKeys.add(event.keyCode);
+  var plane = $('#plane');
+  plane.velocity("stop");
+  var moveAirplane = changePosition(pressedKeys);
+  plane.velocity(
+      moveAirplane
+    , { duration: 4000 });
 
-  if(event.keyCode === 38) {
-    return console.log('i should go up');
-  }
 
-  if(event.keyCode === 39) {
-    ele.style.left = position + 50 +'px';
-    return console.log('i should to right');
-  }
 
-  if(event.keyCode === 40) {
-    return console.log(' i should go down');
-  }
-  console.log(ele);
-  console.log(ele.value);
 }
+
 x.fly();
